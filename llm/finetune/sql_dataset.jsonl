@@ -1,0 +1,15 @@
+{"text": "Show all active users.", "sql": "SELECT * FROM ewallet.user_info WHERE is_active = TRUE;"}
+{"text": "List all products that are available.", "sql": "SELECT * FROM ewallet.product_info WHERE is_active = TRUE;"}
+{"text": "Get the total number of registered users.", "sql": "SELECT COUNT(*) FROM ewallet.user_info;"}
+{"text": "Find all wallet transactions for user ID 123.", "sql": "SELECT * FROM ewallet.wallet_transaction WHERE user_id = 123;"}
+{"text": "Retrieve the latest 10 payment orders.", "sql": "SELECT * FROM ewallet.payment_order ORDER BY order_date DESC LIMIT 10;"}
+{"text": "Find all transactions made today.", "sql": "SELECT * FROM ewallet.wallet_transaction WHERE txn_date::date = CURRENT_DATE;"}
+{"text": "List all failed transactions.", "sql": "SELECT * FROM ewallet.wallet_transaction WHERE txn_status = 0;"}
+{"text": "Get details of payment order with ID 456.", "sql": "SELECT * FROM ewallet.payment_order WHERE id = 456;"}
+{"text": "Find all users who registered in the last 7 days.", "sql": "SELECT * FROM ewallet.user_info WHERE created_at >= NOW() - INTERVAL '7 days';"}
+{"text": "Get the total amount of transactions for user ID 789.", "sql": "SELECT SUM(txn_amount) FROM ewallet.wallet_transaction WHERE user_id = 789;"}
+{"text": "Get the total amount of transactions per user.", "sql": "SELECT user_id, SUM(txn_amount) FROM ewallet.wallet_transaction GROUP BY user_id;"}
+{"text": "List all users along with their wallet balances.", "sql": "SELECT u.id, u.username, w.available_amount FROM ewallet.user_info u JOIN ewallet.wallet_info w ON u.id = w.user_id;"}
+{"text": "Find the most popular product based on purchase count.", "sql": "SELECT p.id, p.name, COUNT(po.id) as purchase_count FROM ewallet.product_info p JOIN ewallet.payment_order po ON po.order_details->>'product_id' = p.id::text GROUP BY p.id ORDER BY purchase_count DESC LIMIT 1;"}
+{"text": "List users who have made at least 5 transactions.", "sql": "SELECT user_id, COUNT(*) FROM ewallet.wallet_transaction GROUP BY user_id HAVING COUNT(*) >= 5;"}
+{"text": "Retrieve the latest 5 transactions with user details.", "sql": "SELECT t.id, t.user_id, u.username, t.txn_amount FROM ewallet.wallet_transaction t JOIN ewallet.user_info u ON t.user_id = u.id ORDER BY t.txn_date DESC LIMIT 5;"}

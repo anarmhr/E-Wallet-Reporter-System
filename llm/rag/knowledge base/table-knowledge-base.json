@@ -1,0 +1,94 @@
+[
+  {
+    "table_name": "user_info",
+    "structure": {
+      "id": "bigserial, primary key, unique identifier for the user",
+      "username": "varchar(255), not null, an alphanumerical unique username to identify users. It is like a nickname",
+      "password": "varchar(255), password of the user. It is hashed.",
+      "user_status": "smallint, status of the user (active, suspended, etc.). 0 - suspended, 1-active",
+      "user_type": "smallint, type of user (admin, regular, etc.)",
+      "created_at": "timestamp, date and time when the user was created",
+      "updated_at": "timestamp, last updated date and time",
+      "language": "varchar(2), language preference of the user",
+      "is_active": "boolean, whether the user is active",
+      "description": "varchar(255), optional description of the user"
+    },
+    "relationship": [
+      "Has a relationship with the payment_order table through user_id. ",
+      "Has a relationship with the wallet_info table through user_id"
+    ]
+  },
+  {
+    "table_name": "user_info",
+    "structure": {
+      "id": "bigserial, primary key, unique identifier for the user",
+      "username": "varchar(255), not null, phone-based username",
+      "password": "varchar(255), password of the user",
+      "user_status": "smallint, status of the user (active, suspended, etc.)",
+      "user_type": "smallint, type of user (admin, regular, etc.)",
+      "created_at": "timestamp, date and time when the user was created",
+      "updated_at": "timestamp, last updated date and time",
+      "language": "varchar(2), language preference of the user",
+      "is_active": "boolean, whether the user is active",
+      "description": "varchar(255), optional description of the user"
+    },
+    "relationship": [
+      "Has a relationship with the payment_order table through user_id",
+      "Has a relationship with the wallet_info table through user_id"
+    ]
+  },
+  {
+    "table_name": "wallet_info",
+    "structure": {
+      "id": "bigserial, primary key, unique identifier for the wallet",
+      "user_id": "bigint, foreign key referencing user_info.id",
+      "wallet_balance": "numeric(14, 4), the balance in the wallet",
+      "currency_code": "varchar(3), currency of the wallet",
+      "created_at": "timestamp, date and time when the wallet was created",
+      "updated_at": "timestamp, last updated date and time",
+      "is_active": "boolean, whether the wallet is active",
+      "is_default": "boolean, whether the wallet is the default one for the user"
+    },
+    "relationship": [
+      "Has a relationship with the user_info table through user_id",
+      "Has a relationship with the wallet_transaction table through wallet_id"
+    ]
+  },
+  {
+    "table_name": "wallet_transaction",
+    "structure": {
+      "id": "bigserial, primary key, unique identifier for the wallet transaction",
+      "wallet_id": "bigint, foreign key referencing wallet_info.id",
+      "transaction_type": "smallint, type of transaction (debit or credit)",
+      "amount": "numeric(14, 4), the transaction amount",
+      "currency_code": "varchar(3), currency of the transaction",
+      "transaction_date": "timestamp, date and time of the transaction",
+      "status": "smallint, status of the transaction",
+      "transaction_details": "jsonb, additional details about the transaction",
+      "is_active": "boolean, whether the transaction is active"
+    },
+    "relationship": [
+      "Has a relationship with the wallet_info table through wallet_id",
+      "Has a relationship with the payment_order table through order_id"
+    ]
+  },
+  {
+    "table_name": "product_info",
+    "structure": {
+      "id": "bigserial, primary key, unique identifier for the product",
+      "name": "varchar(255), name of the product",
+      "description": "text, description of the product",
+      "price": "numeric(14, 4), price of the product",
+      "currency_code": "varchar(3), currency of the product price",
+      "available_stock": "int, number of items available in stock",
+      "created_at": "timestamp, date and time when the product was added",
+      "updated_at": "timestamp, last updated date and time",
+      "is_active": "boolean, whether the product is active"
+    },
+    "relationship": [
+      "May have a relationship with the payment_order table through product purchases"
+    ]
+  }
+]
+
+

@@ -1,0 +1,2 @@
+model-name: codellama/CodeLlama-7b-hf"
+dataset-path: sql_dataset.jsonl
