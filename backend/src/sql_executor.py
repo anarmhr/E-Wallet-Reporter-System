@@ -36,17 +36,3 @@ def execute_query(query, as_dataframe=False):
     finally:
         if conn:
             conn.close()
-
-
-query = """
-select sum(amount), username 
-from ewallet.payment_order po inner join ewallet.user_info ui 
-on ui.id = po.user_id
-group by username order by sum(amount);
-"""
-
-result_dict = execute_query(query)
-print(result_dict)
-
-result_df = execute_query(query, as_dataframe=True)
-print(result_df)

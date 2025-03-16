@@ -2,7 +2,7 @@ import os
 import json
 import chromadb
 
-chroma_client = chromadb.PersistentClient(path=os.path.join(os.getcwd(), "chroma_db"))
+chroma_client = chromadb.PersistentClient(path='llm/model/chroma_db')
 chroma_client.create_collection(name='tables', get_or_create=True)
 
 tables_collection = chroma_client.get_collection(name='tables')
@@ -22,7 +22,4 @@ def add_table_knowledge():
 def query_chroma(query_text):
     result = tables_collection.query(query_texts=[query_text], n_results=2)
     return str(result['documents'])
-
-
-# print(query_chroma('Can you write an SQL that displays user ids with their creation date?'))
 
