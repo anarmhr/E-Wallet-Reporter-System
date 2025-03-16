@@ -19,25 +19,6 @@
     ]
   },
   {
-    "table_name": "user_info",
-    "structure": {
-      "id": "bigserial, primary key, unique identifier for the user",
-      "username": "varchar(255), not null, phone-based username",
-      "password": "varchar(255), password of the user",
-      "user_status": "smallint, status of the user (active, suspended, etc.)",
-      "user_type": "smallint, type of user (admin, regular, etc.)",
-      "created_at": "timestamp, date and time when the user was created",
-      "updated_at": "timestamp, last updated date and time",
-      "language": "varchar(2), language preference of the user",
-      "is_active": "boolean, whether the user is active",
-      "description": "varchar(255), optional description of the user"
-    },
-    "relationship": [
-      "Has a relationship with the payment_order table through user_id",
-      "Has a relationship with the wallet_info table through user_id"
-    ]
-  },
-  {
     "table_name": "wallet_info",
     "structure": {
       "id": "bigserial, primary key, unique identifier for the wallet",
@@ -87,6 +68,33 @@
     },
     "relationship": [
       "May have a relationship with the payment_order table through product purchases"
+    ]
+  },
+  {
+    "table_name": "payment_order",
+    "structure": {
+      "id": "bigserial, primary key, unique identifier for the payment order",
+      "order_uuid": "uuid, unique identifier for the order",
+      "order_date": "timestamp, date and time of the order",
+      "user_id": "bigint, foreign key referencing user_info.id",
+      "target_user_id": "bigint, foreign key referencing another user in the system",
+      "amount": "numeric(14, 4), the payment amount",
+      "currency_code": "varchar(3), currency code for the payment",
+      "additional_fee": "numeric(12, 4), any additional fees for the order",
+      "order_type": "smallint, type of the order",
+      "order_status": "smallint, status of the order",
+      "order_additional_data": "jsonb, additional data related to the order",
+      "order_details": "jsonb, detailed information about the order",
+      "payment_channel": "smallint, method of payment",
+      "created_at": "timestamp, date and time when the order was created",
+      "updated_at": "timestamp, last updated date and time",
+      "is_active": "boolean, whether the order is active",
+      "error_message": "text, error message if there was an issue with the order",
+      "is_auto_payment": "boolean, whether the payment is automatic"
+    },
+    "relationship": [
+      "Has a relationship with the user_info table through user_id",
+      "Has a relationship with the wallet_transaction table through order_id"
     ]
   }
 ]
