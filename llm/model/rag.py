@@ -2,7 +2,7 @@ import os
 import json
 import chromadb
 
-chroma_client = chromadb.PersistentClient(path='llm/model/chroma_db')
+chroma_client = chromadb.PersistentClient(path='./chroma_db')
 chroma_client.create_collection(name='tables', get_or_create=True)
 
 tables_collection = chroma_client.get_collection(name='tables')

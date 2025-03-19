@@ -1,0 +1,2 @@
+endpoints:
+  llm-endpoint: 'localhost:5000'
