@@ -1,4 +1,5 @@
 import json
+import os
 
 from dtos import SqlResponse
 from rabbit_mq import RabbitMQ
@@ -10,7 +11,7 @@ from llm.model.prompt import Prompt
 
 rabbit_mq = RabbitMQ()
 
-openai.api_key = "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"
+openai.api_key = os.getenv('open-ai-key')
 
 with open('./config/base-rules.txt') as f:
     base_rules = '\n'.join(f.readlines())
